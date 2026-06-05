@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Historial — Aguacatia{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Historial de clasificaciones</h1>
+    <p>{{ total }} clasificaciones registradas</p>
+</section>
+
+<section class="filters">
+    <form method="get" action="/historial">
+        <input type="text" name="usuario" value="{{ usuario }}" placeholder="Filtrar por usuario...">
+        <button type="submit" class="btn-secondary">Filtrar</button>
+        {% if usuario %}<a href="/historial" class="btn-link">Limpiar</a>{% endif %}
+    </form>
+</section>
+
+{% if error %}
+<div class="alert error">{{ error }}</div>
+{% elif not items %}
+<div class="empty-state">
+    <p>No hay clasificaciones aún.</p>
+    <a href="/" class="btn-primary">Clasificar un aguacate</a>
+</div>
+{% else %}
+<div class="history-grid">
+    {% for item in items %}
+    <div class="history-card">
+        <img src="{{ item.imagen_url }}" alt="Aguacate" loading="lazy">
+        <div class="history-info">
+            <span class="history-emoji">{{ item.emoji or '' }}</span>
+            <strong>{{ item.clase_display }}</strong>
+            <span class="confidence">{{ "%.0f"|format(item.confianza * 100) }}% confianza</span>
+            <small class="meta">{{ item.usuario }} · {{ item.fecha_at[:10] }}</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if total_pages > 1 %}
+<nav class="pagination">
+    {% if page > 1 %}
+    <a href="/historial?page={{ page - 1 }}{% if usuario %}&usuario={{ usuario }}{% endif %}" class="btn-secondary">← Anterior</a>
+    {% endif %}
+    <span>Página {{ page }} de {{ total_pages }}</span>
+    {% if page < total_pages %}
+    <a href="/historial?page={{ page + 1 }}{% if usuario %}&usuario={{ usuario }}{% endif %}" class="btn-secondary">Siguiente →</a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endif %}
+{% endblock %}

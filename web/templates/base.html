@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Aguacatia{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="nav-logo">Aguacatia</a>
+            <div class="nav-links">
+                <a href="/">Clasificar</a>
+                <a href="/historial">Historial</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Dataset: <a href="https://doi.org/10.17632/3xd9n945v8.1" target="_blank">Xavier et al. (2024) — CC BY 4.0</a></p>
+    </footer>
+</body>
+</html>

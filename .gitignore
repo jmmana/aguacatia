@@ -1,0 +1,34 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.env
+
+# Modelo entrenado (grande, se sube manualmente)
+api/model/best.pt
+api/model/*.pt
+api/model/*.onnx
+
+# Dataset (se descarga del origen)
+dataset/raw/
+dataset/processed/
+dataset/_tmp_extract/
+
+# Base de datos local
+*.db
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+.DS_Store

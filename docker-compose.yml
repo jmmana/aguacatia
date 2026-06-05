@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - aguacatia-db:/data
+      - ./api/model:/app/model
+    environment:
+      - MINIO_ENDPOINT=minio.warlockcode.com
+      - MINIO_ACCESS_KEY=grimorio
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_BUCKET=aguacatia
+      - DB_PATH=/data/aguacatia.db
+      - MODEL_PATH=/app/model/best.pt
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - API_URL=http://api:8000
+    depends_on:
+      - api
+
+volumes:
+  aguacatia-db:

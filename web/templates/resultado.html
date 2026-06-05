@@ -1,0 +1,51 @@
+{% if error %}
+<div class="result-card error">
+    <h3>Error al clasificar</h3>
+    <p>{{ error }}</p>
+</div>
+{% elif result %}
+<div class="result-card success">
+    <div class="result-header">
+        <span class="result-emoji">{{ result.emoji }}</span>
+        <div>
+            <h2>{{ result.clase_display }}</h2>
+            <p class="result-label">{{ result.label }}</p>
+        </div>
+    </div>
+
+    <div class="confidence-bar">
+        <div class="confidence-label">
+            <span>Confianza</span>
+            <strong>{{ "%.1f"|format(result.confianza * 100) }}%</strong>
+        </div>
+        <div class="bar-track">
+            <div class="bar-fill color-{{ result.color }}" style="width: {{ (result.confianza * 100)|int }}%"></div>
+        </div>
+    </div>
+
+    <div class="result-image">
+        <img src="{{ result.imagen_url }}" alt="Aguacate clasificado">
+    </div>
+
+    <details class="top5-details">
+        <summary>Ver probabilidades por clase</summary>
+        <table class="top5-table">
+            {% for item in result.top5 %}
+            <tr>
+                <td>{{ item.clase_display }}</td>
+                <td>
+                    <div class="mini-bar">
+                        <div class="mini-fill" style="width: {{ (item.confianza * 100)|int }}%"></div>
+                    </div>
+                </td>
+                <td class="conf-num">{{ "%.1f"|format(item.confianza * 100) }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </details>
+
+    <button class="btn-secondary" onclick="document.getElementById('upload-form').reset(); document.getElementById('preview').hidden=true; document.getElementById('drop-content').hidden=false; document.getElementById('submit-btn').disabled=true; document.getElementById('result-area').innerHTML='';">
+        Clasificar otra foto
+    </button>
+</div>
+{% endif %}

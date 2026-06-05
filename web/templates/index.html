@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Aguacatia — Clasificador de Aguacates Hass{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>Clasificador de Aguacate Hass</h1>
+    <p class="subtitle">Sube una foto y el sistema identifica el estado de maduración en segundos</p>
+</section>
+
+<section class="upload-section">
+    <form id="upload-form"
+          hx-post="/clasificar"
+          hx-target="#result-area"
+          hx-encoding="multipart/form-data"
+          hx-indicator="#loading">
+
+        <div class="form-group">
+            <label for="usuario">Tu nombre (opcional)</label>
+            <input type="text" id="usuario" name="usuario" placeholder="anonimo" maxlength="50">
+        </div>
+
+        <div class="drop-zone" id="drop-zone">
+            <input type="file" id="file" name="file" accept="image/jpeg,image/png,image/webp" required hidden>
+            <div class="drop-zone-content" id="drop-content">
+                <span class="drop-icon">📷</span>
+                <p>Arrastra una foto aquí o <button type="button" onclick="document.getElementById('file').click()">selecciona</button></p>
+                <p class="hint">JPG, PNG o WEBP · máx. 10 MB</p>
+            </div>
+            <img id="preview" src="" alt="Preview" hidden>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submit-btn" disabled>
+            Clasificar aguacate
+        </button>
+
+        <div id="loading" class="htmx-indicator">
+            <div class="spinner"></div>
+            <span>Analizando imagen...</span>
+        </div>
+    </form>
+</section>
+
+<section id="result-area"></section>
+
+<section class="classes-info">
+    <h2>Las 5 etapas de maduración</h2>
+    <div class="stages-grid">
+        <div class="stage"><span class="stage-num">1</span><strong>Unripe</strong><p>Verde amarillento, muy firme</p></div>
+        <div class="stage"><span class="stage-num">2</span><strong>Breaking</strong><p>Verde oliva, empieza a ablandar</p></div>
+        <div class="stage"><span class="stage-num">3</span><strong>Ripe First</strong><p>Manchas púrpuras, casi listo</p></div>
+        <div class="stage"><span class="stage-num">4</span><strong>Ripe Second</strong><p>Púrpura uniforme — punto óptimo</p></div>
+        <div class="stage"><span class="stage-num">5</span><strong>Overripe</strong><p>Deterioro visible — descartar</p></div>
+    </div>
+</section>
+
+<script>
+const fileInput = document.getElementById('file');
+const dropZone = document.getElementById('drop-zone');
+const dropContent = document.getElementById('drop-content');
+const preview = document.getElementById('preview');
+const submitBtn = document.getElementById('submit-btn');
+
+fileInput.addEventListener('change', showPreview);
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        fileInput.files = dt.files;
+        showPreview();
+    }
+});
+
+function showPreview() {
+    const file = fileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        preview.src = e.target.result;
+        preview.hidden = false;
+        dropContent.hidden = true;
+        submitBtn.disabled = false;
+    };
+    reader.readAsDataURL(file);
+}
+</script>
+{% endblock %}
