@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -7,14 +8,17 @@ from api.models.database import init_db
 from api.routes import classify, history
 from api.services.predictor import is_model_loaded, load_model
 
+logger = logging.getLogger(__name__)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
     try:
         load_model()
-    except Exception:
-        pass  # API arranca sin modelo — /health lo reporta
+        logger.info("Modelo YOLOv8 cargado correctamente.")
+    except Exception as e:
+        logger.error("Error al cargar el modelo: %s", e, exc_info=True)
     yield
 
 
