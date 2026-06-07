@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Dependencias del sistema para Pillow y OpenCV
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 \
+    libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY api/requirements.txt .
@@ -19,6 +19,9 @@ RUN mkdir -p /app/model /data
 RUN cp /app/api/model/best.pt /app/model/best.pt 2>/dev/null || true
 
 ENV MODEL_PATH=/app/model/best.pt
+
+# Validar que el módulo importa correctamente (falla el build si hay error)
+RUN python -c "from api.main import app; print('Import OK')"
 
 EXPOSE 8000
 
