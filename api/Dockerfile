@@ -12,13 +12,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Crear carpeta del modelo y volumen de datos
-RUN mkdir -p /app/model /data
+# Crear carpeta de datos (modelo queda en /app/api/model/best.pt)
+RUN mkdir -p /data
 
-# Copiar modelo al path esperado si existe en el repo
-RUN cp /app/api/model/best.pt /app/model/best.pt 2>/dev/null || true
-
-ENV MODEL_PATH=/app/model/best.pt
+# MODEL_PATH apunta al modelo tal como queda en la imagen tras COPY . .
+ENV MODEL_PATH=/app/api/model/best.pt
 
 EXPOSE 8000
 
