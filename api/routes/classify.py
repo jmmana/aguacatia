@@ -27,11 +27,11 @@ async def classify(
     if len(image_bytes) == 0:
         raise HTTPException(status_code=400, detail="El archivo está vacío.")
 
-    # Subir a MinIO
+    # Subir a MinIO (opcional — no bloquea la clasificación si falla)
     try:
         imagen_url = storage.upload_image(image_bytes, file.content_type)
-    except Exception as e:
-        raise HTTPException(status_code=503, detail=f"Error al guardar la imagen: {e}")
+    except Exception:
+        imagen_url = ""
 
     # Clasificar
     try:
