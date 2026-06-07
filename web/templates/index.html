@@ -42,14 +42,47 @@
 
 <section id="result-area"></section>
 
-<section class="classes-info">
-    <h2>Las 5 etapas de maduración</h2>
-    <div class="stages-grid">
-        <div class="stage"><span class="stage-num">1</span><strong>Unripe</strong><p>Verde amarillento, muy firme</p></div>
-        <div class="stage"><span class="stage-num">2</span><strong>Breaking</strong><p>Verde oliva, empieza a ablandar</p></div>
-        <div class="stage"><span class="stage-num">3</span><strong>Ripe First</strong><p>Manchas púrpuras, casi listo</p></div>
-        <div class="stage"><span class="stage-num">4</span><strong>Ripe Second</strong><p>Púrpura uniforme — punto óptimo</p></div>
-        <div class="stage"><span class="stage-num">5</span><strong>Overripe</strong><p>Deterioro visible — descartar</p></div>
+<section class="ripeness-section">
+    <h2 class="ripeness-title">Etapas de maduración</h2>
+    <div class="ripeness-timeline">
+        <div class="ripeness-track">
+            <div class="ripeness-track-fill"></div>
+        </div>
+        <div class="ripeness-step" data-stage="unripe">
+            <div class="ripeness-dot" style="background:#22c55e; box-shadow:0 0 12px #22c55e55"></div>
+            <div class="ripeness-info">
+                <strong>Unripe</strong>
+                <p>Verde amarillento, muy firme</p>
+            </div>
+        </div>
+        <div class="ripeness-step" data-stage="breaking">
+            <div class="ripeness-dot" style="background:#eab308; box-shadow:0 0 12px #eab30855"></div>
+            <div class="ripeness-info">
+                <strong>Breaking</strong>
+                <p>Verde oliva, empieza a ablandar</p>
+            </div>
+        </div>
+        <div class="ripeness-step" data-stage="ripe_first">
+            <div class="ripeness-dot" style="background:#f97316; box-shadow:0 0 12px #f9731655"></div>
+            <div class="ripeness-info">
+                <strong>Ripe First</strong>
+                <p>Manchas púrpuras, casi listo</p>
+            </div>
+        </div>
+        <div class="ripeness-step" data-stage="ripe_second">
+            <div class="ripeness-dot" style="background:#a855f7; box-shadow:0 0 12px #a855f755"></div>
+            <div class="ripeness-info ripeness-optimal">
+                <strong>Ripe Second <span class="badge-optimal">óptimo</span></strong>
+                <p>Púrpura uniforme, punto ideal</p>
+            </div>
+        </div>
+        <div class="ripeness-step" data-stage="overripe">
+            <div class="ripeness-dot" style="background:#ef4444; box-shadow:0 0 12px #ef444455"></div>
+            <div class="ripeness-info">
+                <strong>Overripe</strong>
+                <p>Deterioro visible, descartar</p>
+            </div>
+        </div>
     </div>
 </section>
 
