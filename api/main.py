@@ -13,7 +13,7 @@ async def lifespan(app: FastAPI):
     await init_db()
     try:
         load_model()
-    except FileNotFoundError:
+    except Exception:
         pass  # API arranca sin modelo — /health lo reporta
     yield
 
