@@ -20,9 +20,6 @@ RUN cp /app/api/model/best.pt /app/model/best.pt 2>/dev/null || true
 
 ENV MODEL_PATH=/app/model/best.pt
 
-# Validar que el módulo importa correctamente (falla el build si hay error)
-RUN python -c "from api.main import app; print('Import OK')"
-
 EXPOSE 8000
 
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips=*"]

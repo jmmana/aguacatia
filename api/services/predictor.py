@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
+from typing import Any
 
 from PIL import Image
-from ultralytics import YOLO
 
 MODEL_PATH = os.getenv("MODEL_PATH", "/app/model/best.pt")
 
@@ -14,12 +14,13 @@ CLASSES = {
     4: ("overripe",    "Overripe — Deteriorado"),
 }
 
-_model: YOLO | None = None
+_model: Any = None
 
 
-def load_model() -> YOLO:
+def load_model():
     global _model
     if _model is None:
+        from ultralytics import YOLO  # lazy import — evita crash en servers sin GPU
         model_path = Path(MODEL_PATH)
         if not model_path.exists():
             raise FileNotFoundError(
