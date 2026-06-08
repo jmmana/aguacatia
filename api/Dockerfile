@@ -5,6 +5,7 @@ WORKDIR /app
 # Dependencias del sistema para Pillow y OpenCV
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 curl \
+    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY api/requirements.txt .
