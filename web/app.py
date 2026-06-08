@@ -13,11 +13,11 @@ app.mount("/static", StaticFiles(directory="web/static"), name="static")
 templates = Jinja2Templates(directory="web/templates")
 
 CLASE_INFO = {
-    "unripe":      {"emoji": "🟢", "color": "green",  "label": "Verde — No apto para consumo"},
-    "breaking":    {"emoji": "🟡", "color": "yellow", "label": "Breaking — En transición"},
-    "ripe_first":  {"emoji": "🟠", "color": "orange", "label": "Casi listo para consumo"},
-    "ripe_second": {"emoji": "✅", "color": "purple", "label": "Punto óptimo de consumo"},
-    "overripe":    {"emoji": "🔴", "color": "red",    "label": "Deteriorado — Descartar"},
+    "unripe":      {"emoji": "🟢", "color": "green",  "label": "No apto para consumo"},
+    "breaking":    {"emoji": "🟡", "color": "yellow", "label": "En transición"},
+    "ripe_first":  {"emoji": "🟠", "color": "orange", "label": "Casi listo"},
+    "ripe_second": {"emoji": "🟣", "color": "purple", "label": "Punto óptimo"},
+    "overripe":    {"emoji": "🔴", "color": "red",    "label": "Descartar"},
 }
 
 
