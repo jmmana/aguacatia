@@ -45,22 +45,3 @@ async def health():
     return {"status": "ok", "model": "loaded" if is_model_loaded() else "not_loaded"}
 
 
-@app.get("/debug/model")
-async def debug_model():
-    import os, traceback
-    from pathlib import Path
-    model_path = os.getenv("MODEL_PATH", "/app/model/best.pt")
-    exists = Path(model_path).exists()
-    error = None
-    if not is_model_loaded():
-        try:
-            from api.services.predictor import load_model
-            load_model()
-        except Exception as e:
-            error = traceback.format_exc()
-    return {
-        "model_path": model_path,
-        "file_exists": exists,
-        "model_loaded": is_model_loaded(),
-        "error": error,
-    }
